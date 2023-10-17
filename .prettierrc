@@ -1,0 +1,23 @@
+{
+    "printWidth": 80,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "bracketSpacing": true,
+    "bracketSameLine": true,
+    "plugins": ["@ianvs/prettier-plugin-sort-imports"],
+    "importOrder": [
+        "<BUILTIN_MODULES>",
+        "<THIRD_PARTY_MODULES>",
+        "",
+        "^@plasmo/(.*)$",
+        "",
+        "^@plasmohq/(.*)$",
+        "",
+        "^~(.*)$",
+        "",
+        "^[./]"
+    ]
+}
