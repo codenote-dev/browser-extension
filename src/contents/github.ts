@@ -49,15 +49,13 @@ function getCode(): CodeLine[] {
 function getMetadata(): CodeLocation {
     const { pathname } = window.location;
     const { title } = document;
-    const titleSplit = title.split(' ');
-    const [username, repositoryName] =
-        titleSplit[titleSplit.length - 1].split('/');
-    const repository = `${username}/${repositoryName}`;
-    const filePath = titleSplit[0].replace(repositoryName, '');
+    const repository = pathname.split('/blob')[0].replace('/', '');
+    const [username, repositoryName] = repository.split('/');
+    const filePath = title.split(' ')[0].replace(repositoryName, '');
     const fileName = filePath.split('/').pop();
     const extension = fileName?.split('.').pop();
     const branchName = pathname
-        .replace(`/${username}/${repositoryName}`, '') // remove /username/repository from path
+        .replace(`/${repository}`, '') // remove /username/repository from path
         .replace('/blob/', '') // remove /blob/ from path
         .replace(filePath, ''); // remove filePath from path
 
@@ -77,6 +75,7 @@ async function sendToSidePanel(data: Code) {
         area: 'local',
     });
 
+    console.log(data);
     await storage.set(StorageKey.CODE_TO_COMMENT, data);
     await chrome.runtime.sendMessage({ type: 'open_side_panel' });
 }
@@ -122,3 +121,4 @@ function contentScript() {
 }
 
 window.addEventListener('load', contentScript);
+window.addEventListener('popstate', contentScript);
