@@ -2,8 +2,13 @@ import type { PlasmoCSConfig } from 'plasmo';
 
 import { Storage } from '@plasmohq/storage';
 
-import { codeLineSchema, codeMetaSchema, codeSchema } from '~schemas/schema';
-import type { Code, CodeLine, CodeMeta } from '~schemas/schema';
+import { StorageKey } from '~constants';
+import {
+    codeLineSchema,
+    codeLocationSchema,
+    codeSchema,
+} from '~schemas/schema';
+import type { Code, CodeLine, CodeLocation } from '~schemas/schema';
 
 export const config: PlasmoCSConfig = {
     matches: [
@@ -17,8 +22,6 @@ const CTA_TEXT = 'Leave a comment';
 const highlightedMenuButtonContainerSelector =
     '#highlighted-line-menu-container';
 const highlightedMenuSelector = '#__primerPortalRoot__';
-
-const storage = new Storage();
 
 function getCode(): CodeLine[] {
     // Get highlighted line numbers
@@ -43,7 +46,7 @@ function getCode(): CodeLine[] {
     });
 }
 
-function getMetadata(): CodeMeta {
+function getMetadata(): CodeLocation {
     const { pathname } = window.location;
     const { title } = document;
     const titleSplit = title.split(' ');
@@ -58,7 +61,7 @@ function getMetadata(): CodeMeta {
         .replace('/blob/', '') // remove /blob/ from path
         .replace(filePath, ''); // remove filePath from path
 
-    return codeMetaSchema.parse({
+    return codeLocationSchema.parse({
         branchName,
         file: {
             path: filePath,
@@ -70,7 +73,11 @@ function getMetadata(): CodeMeta {
 }
 
 async function sendToSidePanel(data: Code) {
-    await storage.set('code-to-comment', data);
+    const storage = new Storage({
+        area: 'local',
+    });
+
+    await storage.set(StorageKey.CODE_TO_COMMENT, data);
     await chrome.runtime.sendMessage({ type: 'open_side_panel' });
 }
 

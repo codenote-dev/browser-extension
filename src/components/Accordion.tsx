@@ -1,29 +1,44 @@
 import { Disclosure } from '@headlessui/react';
-import { ChevronUpIcon } from '@heroicons/react/20/solid';
+import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/react/24/outline';
 import * as React from 'react';
 
 export type AccordionProps = {
     panels: {
+        id: number;
         title: string;
         content: React.ReactNode;
     }[];
 };
 
 export function Accordion({ panels }: AccordionProps) {
-    const toRender = panels.map(({ title, content }) => (
-        <Disclosure>
+    const toRender = panels.map(({ id, title, content }) => (
+        <Disclosure as="div" key={id} className="pt-6">
             {({ open }) => (
                 <>
-                    <Disclosure.Button className="flex w-full justify-between rounded-lg bg-purple-100 px-4 py-2 text-left text-sm font-medium text-purple-900 hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                        <span>{title}</span>
-                        <ChevronUpIcon
-                            className={`${
-                                open ? 'rotate-180 transform' : ''
-                            } h-5 w-5 text-purple-500`}
-                        />
-                    </Disclosure.Button>
-                    <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                        {content}
+                    <dt>
+                        <Disclosure.Button className="flex w-full items-start justify-between text-left text-white">
+                            <span className="text-base font-semibold leading-7">
+                                {title}
+                            </span>
+                            <span className="ml-6 flex h-7 items-center">
+                                {open ? (
+                                    <MinusSmallIcon
+                                        className="h-6 w-6"
+                                        aria-hidden="true"
+                                    />
+                                ) : (
+                                    <PlusSmallIcon
+                                        className="h-6 w-6"
+                                        aria-hidden="true"
+                                    />
+                                )}
+                            </span>
+                        </Disclosure.Button>
+                    </dt>
+                    <Disclosure.Panel as="dd" className="mt-2 pr-12">
+                        <p className="text-base leading-7 text-gray-300">
+                            {content}
+                        </p>
                     </Disclosure.Panel>
                 </>
             )}
@@ -31,9 +46,14 @@ export function Accordion({ panels }: AccordionProps) {
     ));
 
     return (
-        <div className="w-full px-4 pt-16">
-            <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-2">
-                {toRender}
+        <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 lg:py-40">
+            <div className="mx-auto max-w-4xl divide-y divide-white/10">
+                <h2 className="text-2xl font-bold leading-10 tracking-tight text-white">
+                    Notes
+                </h2>
+                <dl className="mt-10 space-y-6 divide-y divide-white/10">
+                    {toRender}
+                </dl>
             </div>
         </div>
     );
