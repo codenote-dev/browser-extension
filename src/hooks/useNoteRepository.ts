@@ -1,7 +1,5 @@
-import { Storage } from '@plasmohq/storage';
-import { useStorage } from '@plasmohq/storage/hook';
-
 import { StorageKey } from '~constants';
+import { useStorage } from '~core/storage';
 import {
     noteOutputSchema,
     type Code,
@@ -13,12 +11,7 @@ import {
 type Notes = { [key: number]: NoteOutput };
 
 export function useNoteRepository() {
-    const [notes, setNotes] = useStorage<Notes>({
-        key: StorageKey.NOTES,
-        instance: new Storage({
-            area: 'local',
-        }),
-    });
+    const [notes, setNotes] = useStorage<Notes>(StorageKey.NOTES);
 
     return {
         async create(

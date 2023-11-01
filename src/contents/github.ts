@@ -1,8 +1,7 @@
 import type { PlasmoCSConfig } from 'plasmo';
 
-import { Storage } from '@plasmohq/storage';
-
 import { StorageKey } from '~constants';
+import { storage } from '~core/storage';
 import {
     codeLineSchema,
     codeLocationSchema,
@@ -71,10 +70,6 @@ function getMetadata(): CodeLocation {
 }
 
 async function sendToSidePanel(data: Code) {
-    const storage = new Storage({
-        area: 'local',
-    });
-
     console.log(data);
     await storage.set(StorageKey.CODE_TO_COMMENT, data);
     await chrome.runtime.sendMessage({ type: 'open_side_panel' });

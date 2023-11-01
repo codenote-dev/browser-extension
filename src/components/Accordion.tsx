@@ -35,11 +35,7 @@ export function Accordion({ panels }: AccordionProps) {
                             </span>
                         </Disclosure.Button>
                     </dt>
-                    <Disclosure.Panel as="dd" className="mt-2 pr-12">
-                        <p className="text-base leading-7 text-gray-300">
-                            {content}
-                        </p>
-                    </Disclosure.Panel>
+                    <Disclosure.Panel as="dd">{content}</Disclosure.Panel>
                 </>
             )}
         </Disclosure>
