@@ -7,7 +7,8 @@
     "scripts": {
         "dev": "plasmo dev",
         "build": "plasmo build",
-        "package": "plasmo package"
+        "package": "plasmo package",
+        "preinstall": "npx only-allow pnpm"
     },
     "dependencies": {
         "@headlessui/react": "^1.7.17",
