@@ -1,7 +1,7 @@
 import type { PlasmoCSConfig } from 'plasmo';
 
 import { StorageKey } from '~constants';
-import { storage } from '~core/storage';
+import { storage } from '~data/storage';
 import {
     codeLineSchema,
     codeLocationSchema,
@@ -57,8 +57,10 @@ function getMetadata(): CodeLocation {
         .replace(`/${repository}`, '') // remove /username/repository from path
         .replace('/blob/', '') // remove /blob/ from path
         .replace(filePath, ''); // remove filePath from path
+    const provider = 'github';
 
     return codeLocationSchema.parse({
+        provider,
         branchName,
         file: {
             path: filePath,
@@ -94,8 +96,6 @@ function insert() {
     commentMenuItem.textContent = CTA_TEXT;
 
     commentMenuItem.addEventListener('click', () => {
-        const code = getCode();
-
         sendToSidePanel(
             codeSchema.parse({
                 ...getMetadata(),
@@ -109,11 +109,15 @@ function insert() {
     firstMenuItem.parentElement?.insertBefore(commentMenuItem, firstMenuItem);
 }
 
-function contentScript() {
-    document
-        .querySelector(highlightedMenuButtonContainerSelector)
-        ?.addEventListener('click', insert);
-}
-
-window.addEventListener('load', contentScript);
-window.addEventListener('popstate', contentScript);
+// Listen for clicks on highlighted code
+document.addEventListener('click', (e) => {
+    if (e.target instanceof Element) {
+        if (
+            e.target.matches(highlightedMenuButtonContainerSelector) ||
+            !!e.target.closest(highlightedMenuButtonContainerSelector)
+        ) {
+            e.stopPropagation();
+            insert();
+        }
+    }
+});

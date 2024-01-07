@@ -6,11 +6,18 @@ const fileSchema = z.object({
     ext: z.string(),
 });
 
+export const providerSchema = z.union([
+    z.literal('github'),
+    z.literal('gitlab'),
+    z.literal('bitbucket'),
+]);
+
 export const codeLineSchema = z.object({
     lineNumber: z.coerce.number().gt(0),
     code: z.string(),
 });
 export const codeLocationSchema = z.object({
+    provider: providerSchema,
     repository: z.string(),
     branchName: z.string(),
     file: fileSchema,
@@ -20,6 +27,7 @@ export const codeSchema = codeLocationSchema.extend({
 });
 
 export const noteSchema = z.object({
+    provider: providerSchema,
     repository: z.string(),
     commitId: z.string().trim().min(7),
     link: z.string().url(),
@@ -41,6 +49,7 @@ export const noteOutputSchema = noteSchema.extend({
     updatedAt: z.number(),
 });
 
+export type Provider = z.infer<typeof providerSchema>;
 export type File = z.infer<typeof fileSchema>;
 export type CodeLine = z.infer<typeof codeLineSchema>;
 export type CodeLocation = z.infer<typeof codeLocationSchema>;

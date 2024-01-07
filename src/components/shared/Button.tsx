@@ -1,4 +1,4 @@
-import { useContext, type ComponentType, type ReactNode } from 'react';
+import { useContext, type ComponentType } from 'react';
 
 import { Theme, ThemeContext } from '~context/ThemeContext';
 import { type ObjectValues } from '~utils';
@@ -6,6 +6,7 @@ import { type ObjectValues } from '~utils';
 export const ButtonVariant = {
     primary: 'primary',
     secondary: 'secondary',
+    link: 'link',
 } as const;
 
 export const ButtonSize = {
@@ -58,6 +59,7 @@ export function Button(props: ButtonProps) {
                 'ring-gray-300',
                 'hover:bg-gray-50',
             ],
+            [ButtonVariant.link]: ['text-gray-900', 'hover:bg-gray-50'],
         },
         [Theme.dark]: {
             [ButtonVariant.primary]: [
@@ -74,6 +76,7 @@ export function Button(props: ButtonProps) {
                 'text-white',
                 'hover:bg-white/20',
             ],
+            [ButtonVariant.link]: ['text-white', 'hover:bg-white/20'],
         },
     };
 

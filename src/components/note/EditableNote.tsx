@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
+import { Button } from '~components/shared/Button';
+import { Textarea } from '~components/shared/Textarea';
 import type { CodeLine } from '~schemas/schema';
 import type { LanguageAlias } from '~utils';
 
-import { Button } from './Button';
 import { CodeBlock } from './CodeBlock';
-import { Textarea } from './Textarea';
 
 export type EditableNoteProps = {
     code: CodeLine[];

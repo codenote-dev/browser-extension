@@ -20,3 +20,7 @@ export type ObjectValues<T> = T[keyof T];
 export function getCodeLanguage(alias: LanguageAlias): Language {
     return reverseIndex[alias];
 }
+
+export function removeLeadingSlash(str: string) {
+    return str.replace(/^\//, '');
+}

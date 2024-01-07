@@ -1,5 +1,5 @@
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { githubGist } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { stackoverflowDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 import { getCodeLanguage, type LanguageAlias } from '~utils';
 
@@ -16,7 +16,7 @@ export function CodeBlock({ code, startLine, language }: CodeBlockProps) {
             startingLineNumber={startLine}
             useInlineStyles={true}
             language={getCodeLanguage(language)}
-            style={githubGist}>
+            style={stackoverflowDark}>
             {code}
         </SyntaxHighlighter>
     );

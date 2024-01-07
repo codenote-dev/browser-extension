@@ -25,12 +25,20 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     (async () => {
         if (message.type === 'open_side_panel') {
             // This will open a tab-specific side panel only on the current tab.
-            await chrome.sidePanel.open({ tabId: sender.tab?.id });
-            await chrome.sidePanel.setOptions({
-                tabId: sender.tab?.id,
-                path: 'sidepanel.html',
-                enabled: true,
-            });
+            await openSidePanel(sender.tab?.id);
         }
     })();
 });
+
+chrome.sidePanel
+    .setPanelBehavior({ openPanelOnActionClick: true })
+    .catch((error) => console.error(error));
+
+async function openSidePanel(tabId?: number) {
+    await chrome.sidePanel.open({ tabId: tabId });
+    await chrome.sidePanel.setOptions({
+        tabId: tabId,
+        path: 'sidepanel.html',
+        enabled: true,
+    });
+}
