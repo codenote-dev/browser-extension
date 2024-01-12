@@ -16,7 +16,15 @@ export function useNotesStorage() {
             comment: string,
         ) {
             const commitId = await getCommitId(repository, branchName);
-            const link = createLink(repository, commitId, file);
+            const startLine = code[0].lineNumber;
+            const endLine = code[code.length - 1].lineNumber;
+            const link = createLink(
+                repository,
+                commitId,
+                file,
+                startLine,
+                endLine,
+            );
             const note: NoteOutput = {
                 id: Date.now(),
                 provider,
@@ -25,9 +33,9 @@ export function useNotesStorage() {
                 link,
                 comment,
                 code,
-                startLine: code[0].lineNumber,
-                // End line is always 1 larger then actual to hadle the case of single line code
-                endLine: code[code.length - 1].lineNumber + 1,
+                startLine,
+                // End line is always 1 larger then actual to handle the case of single line code
+                endLine: endLine + 1,
                 file,
                 createdAt: Date.now(),
                 updatedAt: Date.now(),
@@ -45,7 +53,9 @@ export function useNotesStorage() {
             }
         },
 
-        // getOne(id: number): NoteOutput {},
+        getOne(id: number): NoteOutput {
+            return notes[id];
+        },
 
         getAll(): NoteOutput[] {
             if (!notes) {

@@ -12,6 +12,15 @@ export async function getCommitId(
     return sha;
 }
 
-export function createLink(repo: string, commitId: string, file: File) {
-    return `https://github.com/${repo}/blob/${commitId}${file.path}`;
+export function createLink(
+    repo: string,
+    commitId: string,
+    file: File,
+    startLine: number,
+    endLine: number,
+) {
+    const highlightedLines =
+        startLine === endLine ? `L${startLine}` : `L${startLine}-L${endLine}`;
+
+    return `https://github.com/${repo}/blob/${commitId}${file.path}#${highlightedLines}`;
 }

@@ -1,11 +1,9 @@
-import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
-
-import { Button } from '~components/shared/Button';
 import { useNotesStorage } from '~data/useNotesStorage';
 import type { CodeLine } from '~schemas/schema';
 import type { LanguageAlias } from '~utils';
 
 import { CodeBlock } from './CodeBlock';
+import { NoteActions } from './NoteActions';
 
 export type NoteProps = {
     id: number;
@@ -20,18 +18,7 @@ export function Note({ id, code, language, note = '' }: NoteProps) {
     return (
         <div className="relative px-3 pb-3">
             <div className="left absolute right-3">
-                <Button
-                    icon={PencilIcon}
-                    size="xs"
-                    variant="link"
-                    action={() => console.log('clicked')}
-                />
-                <Button
-                    icon={TrashIcon}
-                    size="xs"
-                    variant="link"
-                    action={() => notesStorage.delete(id)}
-                />
+                <NoteActions id={id} />
             </div>
             <CodeBlock
                 startLine={code[0].lineNumber}
