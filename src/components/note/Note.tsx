@@ -16,15 +16,17 @@ export function Note({ id, code, language, note = '' }: NoteProps) {
     const notesStorage = useNotesStorage();
 
     return (
-        <div className="relative px-3 pb-3">
-            <div className="left absolute right-3">
-                <NoteActions id={id} />
+        <div className="px-3 pb-3">
+            <div className="group relative">
+                <div className="left collapse absolute right-0 rounded-bl backdrop-blur group-hover:visible">
+                    <NoteActions id={id} />
+                </div>
+                <CodeBlock
+                    startLine={code[0].lineNumber}
+                    language={language}
+                    code={code.map((x) => x.code).join('\n')}
+                />
             </div>
-            <CodeBlock
-                startLine={code[0].lineNumber}
-                language={language}
-                code={code.map((x) => x.code).join('\n')}
-            />
             <div className="bg-gray-500/10 p-1 text-sm text-white">{note}</div>
         </div>
     );
