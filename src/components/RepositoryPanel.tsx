@@ -17,13 +17,15 @@ const RepositoryPanel = ({
     repository,
     files,
 }: RepositoryPanelProps) => {
-    const notesCount = Object.values(files)
-        .reduce((acc, notes) => acc + notes.length, 0)
-        .toString();
+    const notesCount = Object.values(files).reduce(
+        (acc, notes) => acc + notes.length,
+        0,
+    );
+    const notesCountString = notesCount > 99 ? '99+' : notesCount.toString();
     const titleBarProps = {
         icon: provider === 'gitlab' ? <GithubIcon /> : <GithubIcon />,
         title: repository,
-        label: notesCount,
+        label: notesCountString,
         variant: 'primary',
     } as AccordionBarProps;
     const content = Object.entries(files).map(([fileName, notes]) => (

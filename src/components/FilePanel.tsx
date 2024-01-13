@@ -13,7 +13,7 @@ export type FilePanelProps = {
 const FilePanel = ({ fileName, notes }: FilePanelProps) => {
     const titleBarProps = {
         title: removeLeadingSlash(fileName),
-        label: notes.length.toString(),
+        label: notes.length > 99 ? '99+' : notes.length.toString(),
         variant: 'secondary',
     } as AccordionBarProps;
     const content = notes.map((note) => (
