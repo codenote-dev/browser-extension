@@ -8,6 +8,10 @@ export type AccordionBarProps = {
     label?: string;
     variant?: 'primary' | 'secondary';
     open?: boolean;
+    trim?: {
+        direction: 'start' | 'end';
+        maxWidth: number;
+    };
 };
 
 const AccordionBar = ({
@@ -16,6 +20,7 @@ const AccordionBar = ({
     label,
     variant = 'primary',
     open = false,
+    trim = { direction: 'end', maxWidth: 250 },
 }: AccordionBarProps) => {
     const barClass = classNames(
         'flex w-full cursor-pointer items-start justify-between p-3 text-left text-white',
@@ -44,11 +49,20 @@ const AccordionBar = ({
     ) : (
         toggleIcon
     );
+    const renderedTitle = trim ? (
+        <span
+            className={`w-[${trim.maxWidth}px] overflow-hidden text-ellipsis whitespace-nowrap text-left`}
+            dir={trim.direction === 'end' ? 'rtl' : 'ltr'}>
+            {title}
+        </span>
+    ) : (
+        title
+    );
     return (
         <Disclosure.Button as="dt" className={barClass}>
-            <span className={titleClass}>
+            <span className={titleClass} title={title}>
                 {icon && <span className="mr-2 w-5 fill-white">{icon}</span>}
-                {title}
+                {renderedTitle}
             </span>
             <span className="flex h-7 items-center">{labelSlot}</span>
         </Disclosure.Button>
