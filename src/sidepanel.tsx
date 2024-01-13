@@ -1,4 +1,4 @@
-import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 
 import { CreateNote } from '~routes/CreateNote';
 import { Notes } from '~routes/Notes';
@@ -6,7 +6,7 @@ import { Root } from '~routes/Root';
 
 import '~/style.css';
 
-const router = createMemoryRouter([
+const router = createHashRouter([
     {
         element: <Root />,
         children: [
