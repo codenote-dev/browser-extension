@@ -23,6 +23,7 @@ const FilePanel = ({ fileName, notes }: FilePanelProps) => {
             code={note.code}
             language={note.file.ext as LanguageAlias}
             note={note.comment}
+            commitId={note.commitId}
         />
     ));
 

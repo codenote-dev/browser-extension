@@ -1,6 +1,6 @@
 import { useNotesStorage } from '~data/useNotesStorage';
 import type { CodeLine } from '~schemas/schema';
-import type { LanguageAlias } from '~utils';
+import { shortenCommitId, type LanguageAlias } from '~utils';
 
 import { CodeBlock } from './CodeBlock';
 import { NoteActions } from './NoteActions';
@@ -9,10 +9,11 @@ export type NoteProps = {
     id: number;
     code: CodeLine[];
     language: LanguageAlias;
+    commitId: string;
     note?: string;
 };
 
-export function Note({ id, code, language, note = '' }: NoteProps) {
+export function Note({ id, code, language, commitId, note = '' }: NoteProps) {
     const notesStorage = useNotesStorage();
 
     return (
@@ -27,7 +28,12 @@ export function Note({ id, code, language, note = '' }: NoteProps) {
                     code={code.map((x) => x.code).join('\n')}
                 />
             </div>
-            <div className="bg-gray-500/10 p-1 text-sm text-white">{note}</div>
+            <div className="flex items-start justify-between bg-[#282a2d] px-3 py-2 text-sm text-[#bdbdbd]">
+                {note}
+                <span className="ml-2 inline-flex items-center rounded p-1 text-[0.625rem]/3 ring-1 ring-inset ring-[#828282]">
+                    {shortenCommitId(commitId)}
+                </span>
+            </div>
         </div>
     );
 }

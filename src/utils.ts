@@ -24,3 +24,7 @@ export function getCodeLanguage(alias: LanguageAlias): Language {
 export function removeLeadingSlash(str: string) {
     return str.replace(/^\//, '');
 }
+
+export function shortenCommitId(commitId: string) {
+    return commitId.slice(0, 7);
+}

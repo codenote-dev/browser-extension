@@ -10,13 +10,20 @@ export type CodeBlockProps = {
 };
 
 export function CodeBlock({ code, startLine, language }: CodeBlockProps) {
+    console.log(stackoverflowDark);
     return (
         <SyntaxHighlighter
             showLineNumbers={true}
             startingLineNumber={startLine}
             useInlineStyles={true}
             language={getCodeLanguage(language)}
-            style={stackoverflowDark}>
+            style={{
+                ...stackoverflowDark,
+                hljs: {
+                    ...stackoverflowDark.hljs,
+                    paddingLeft: '0.75rem',
+                },
+            }}>
             {code}
         </SyntaxHighlighter>
     );
