@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import { StorageKey } from '~constants';
 import { useStorage } from '~data/storage';
@@ -13,7 +13,9 @@ export const Root = () => {
 
     useEffect(() => {
         if (codeToComment) {
-            navigate('/create');
+            navigate('/create', {
+                state: {},
+            });
         }
     }, [codeToComment]);
 

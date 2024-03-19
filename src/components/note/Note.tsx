@@ -1,4 +1,3 @@
-import { useNotesStorage } from '~data/useNotesStorage';
 import type { CodeLine } from '~schemas/schema';
 import { shortenCommitId, type LanguageAlias } from '~utils';
 
@@ -14,8 +13,6 @@ export type NoteProps = {
 };
 
 export function Note({ id, code, language, commitId, note = '' }: NoteProps) {
-    const notesStorage = useNotesStorage();
-
     return (
         <div className="px-3 pb-3">
             <div className="group relative">

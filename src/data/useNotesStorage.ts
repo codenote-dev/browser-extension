@@ -53,6 +53,10 @@ export function useNotesStorage() {
             }
         },
 
+        hasAny() {
+            return Boolean(notes && Object.keys(notes).length);
+        },
+
         getOne(id: number): NoteOutput {
             return notes[id];
         },

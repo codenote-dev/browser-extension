@@ -3,6 +3,7 @@ import {
     PencilIcon,
     TrashIcon,
 } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from '~components/shared/Button';
 import { useNotesStorage } from '~data/useNotesStorage';
@@ -13,6 +14,7 @@ export type NoteActionsProps = {
 
 export function NoteActions({ id }: NoteActionsProps) {
     const notesStorage = useNotesStorage();
+    const navigate = useNavigate();
 
     function view() {
         const note = notesStorage.getOne(id);
@@ -32,7 +34,9 @@ export function NoteActions({ id }: NoteActionsProps) {
                 icon={PencilIcon}
                 size="xs"
                 variant="link"
-                action={() => console.log('clicked')}
+                action={() => {
+                    navigate(`/edit/${id}`);
+                }}
             />
             <Button
                 icon={TrashIcon}

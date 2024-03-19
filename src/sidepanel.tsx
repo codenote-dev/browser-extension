@@ -1,6 +1,8 @@
+import { StrictMode } from 'react';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 
 import { CreateNote } from '~routes/CreateNote';
+import { EditNote } from '~routes/EditNote';
 import { Notes } from '~routes/Notes';
 import { Root } from '~routes/Root';
 
@@ -20,12 +22,20 @@ const router = createHashRouter([
                 path: '/create',
                 element: <CreateNote />,
             },
+            {
+                path: '/edit/:id',
+                element: <EditNote />,
+            },
         ],
     },
 ]);
 
 const Sidepanel = () => {
-    return <RouterProvider router={router} />;
+    return (
+        // <StrictMode>
+        <RouterProvider router={router} />
+        // </StrictMode>
+    );
 };
 
 export default Sidepanel;

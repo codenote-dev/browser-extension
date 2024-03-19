@@ -1,11 +1,10 @@
-import { useNotesStorage } from '~data/useNotesStorage';
-import type { NoteOutput } from '~schemas/schema';
-
-import RepositoryPanel from '../components/RepositoryPanel';
+import RepositoryPanel from '~components/RepositoryPanel';
 import {
     Accordion,
     type AccordionProps,
-} from '../components/shared/accordion/Accordion';
+} from '~components/shared/accordion/Accordion';
+import { useNotesStorage } from '~data/useNotesStorage';
+import type { NoteOutput } from '~schemas/schema';
 
 export const Notes = () => {
     const notesStorage = useNotesStorage();

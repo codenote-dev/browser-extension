@@ -10,7 +10,6 @@ export type CodeBlockProps = {
 };
 
 export function CodeBlock({ code, startLine, language }: CodeBlockProps) {
-    console.log(stackoverflowDark);
     return (
         <SyntaxHighlighter
             showLineNumbers={true}
