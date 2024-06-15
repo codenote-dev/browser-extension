@@ -27,22 +27,23 @@ function getCode(): CodeLine[] {
     const highlightedLineNumbers = [
         ...document.querySelectorAll('.highlighted-line'),
     ].map((el) => (el as HTMLElement).dataset.lineNumber);
+    const startLine = parseInt(highlightedLineNumbers[0] || '1', 10);
     const highlightedCodeSelector = highlightedLineNumbers
         .map((x) => `#LC${x}`)
         .join(',');
 
     // Search for highlighted code lines and transform them to readable json
-    return [...document.querySelectorAll(highlightedCodeSelector)].map((el) => {
-        const lineNumber = (el as HTMLElement).dataset.lineNumber;
-        const code = [...el.querySelectorAll('[data-code-text]')]
-            .map((child) => (child as HTMLElement).dataset.codeText)
-            .join('');
+    return [...document.querySelectorAll(highlightedCodeSelector)].map(
+        (el, index) => {
+            const lineNumber = startLine + index;
+            const code = el.textContent;
 
-        return codeLineSchema.parse({
-            lineNumber,
-            code,
-        });
-    });
+            return codeLineSchema.parse({
+                lineNumber,
+                code,
+            });
+        },
+    );
 }
 
 function getMetadata(): CodeLocation {
