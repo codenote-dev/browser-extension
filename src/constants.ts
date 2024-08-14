@@ -1,6 +1,18 @@
 export enum StorageKey {
     CODE_TO_COMMENT = 'code_to_comment',
     NOTES = 'notes',
+    BROWSER_NAME = 'browser_name',
+}
+
+export enum BrowserName {
+    Arc = 'Arc',
+    Chrome = 'Chrome',
+    Edge = 'Microsoft Edge',
+    Firefox = 'Firefox',
+    InternetExplorer = 'Internet Explorer',
+    Opera = 'Opera',
+    Safari = 'Safari',
+    Unknown = 'Unknown',
 }
 
 export const LANGUAGE_TO_ALIASES = {

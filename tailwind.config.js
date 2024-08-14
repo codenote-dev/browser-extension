@@ -2,9 +2,10 @@
 module.exports = {
     mode: 'jit',
     darkMode: 'class',
-    content: ['./src/**/*.tsx'],
+    content: ['./src/contents/*.tsx'],
     plugins: [
         require('@tailwindcss/forms'),
         require('@tailwindcss/typography'),
     ],
+    prefix: 'tw-',
 };

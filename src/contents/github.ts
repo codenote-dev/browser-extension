@@ -1,13 +1,6 @@
 import type { PlasmoCSConfig } from 'plasmo';
 
-import { StorageKey } from '~constants';
-import { storage } from '~data/storage';
-import {
-    codeLineSchema,
-    codeLocationSchema,
-    codeSchema,
-} from '~schemas/schema';
-import type { Code, CodeLine, CodeLocation } from '~schemas/schema';
+import { setCode } from '~data/services/CodeService';
 
 export const config: PlasmoCSConfig = {
     matches: [
@@ -22,7 +15,7 @@ const highlightedMenuButtonContainerSelector =
     '#highlighted-line-menu-container';
 const highlightedMenuSelector = '#__primerPortalRoot__';
 
-function getCode(): CodeLine[] {
+function getCode() {
     // Get highlighted line numbers
     const highlightedLineNumbers = [
         ...document.querySelectorAll('.highlighted-line'),
@@ -38,15 +31,15 @@ function getCode(): CodeLine[] {
             const lineNumber = startLine + index;
             const code = el.textContent;
 
-            return codeLineSchema.parse({
+            return {
                 lineNumber,
                 code,
-            });
+            };
         },
     );
 }
 
-function getMetadata(): CodeLocation {
+function getMetadata() {
     const { pathname } = window.location;
     const { title } = document;
     const repository = pathname.split('/blob')[0].replace('/', '');
@@ -60,7 +53,7 @@ function getMetadata(): CodeLocation {
         .replace(filePath, ''); // remove filePath from path
     const provider = 'github';
 
-    return codeLocationSchema.parse({
+    return {
         provider,
         branchName,
         file: {
@@ -69,12 +62,11 @@ function getMetadata(): CodeLocation {
             ext: extension,
         },
         repository,
-    });
+    };
 }
 
-async function sendToSidePanel(data: Code) {
-    console.log(data);
-    await storage.set(StorageKey.CODE_TO_COMMENT, data);
+async function sendToSidePanel(data: unknown) {
+    setCode(data);
     await chrome.runtime.sendMessage({ type: 'open_side_panel' });
 }
 
@@ -97,12 +89,10 @@ function insert() {
     commentMenuItem.textContent = CTA_TEXT;
 
     commentMenuItem.addEventListener('click', () => {
-        sendToSidePanel(
-            codeSchema.parse({
-                ...getMetadata(),
-                code: getCode(),
-            }),
-        );
+        sendToSidePanel({
+            ...getMetadata(),
+            code: getCode(),
+        });
 
         // Close context menu
         highlightedMenuButtonContainer?.querySelector('button')?.click();

@@ -1,8 +1,8 @@
 {
     "name": "code-notes-browser-extension",
-    "displayName": "Code comments",
+    "displayName": "Code Note",
     "version": "0.0.1",
-    "description": "Browser extension to leave notes in the codefor a future resference",
+    "description": "Browser extension to leave notes in the code for a future resference",
     "author": "s.yukhnevych@gmail.com",
     "scripts": {
         "dev": "plasmo dev",
@@ -13,10 +13,13 @@
     "dependencies": {
         "@headlessui/react": "^1.7.19",
         "@heroicons/react": "^2.1.3",
+        "@orama/orama": "^2.0.21",
         "@plasmohq/storage": "^1.10.0",
         "@tailwindcss/forms": "^0.5.7",
         "@tailwindcss/typography": "^0.5.13",
+        "@tanstack/react-query": "^5.51.1",
         "classnames": "^2.5.1",
+        "iconoir-react": "^7.7.0",
         "lodash": "^4.17.21",
         "plasmo": "0.87.2",
         "react": "18.2.0",
