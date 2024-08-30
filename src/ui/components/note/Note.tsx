@@ -12,6 +12,9 @@ export function Note({ noteModel }: NoteProps) {
     const code = noteModel.code.code;
     const commitId = noteModel.code.commitId;
     const language = noteModel.code.file.ext as LanguageAlias;
+    const label = commitId
+        ? shortenCommitId(commitId)
+        : noteModel.code.branchName;
 
     return (
         <div className="codenote__m-3 first:codenote__mt-0">
@@ -27,11 +30,9 @@ export function Note({ noteModel }: NoteProps) {
             </div>
             <div className="codenote__flex codenote__items-start codenote__justify-between codenote__bg-foreground/15 codenote__p-3 codenote__rounded-b-sm codenote__text-sm codenote__text-neutral-950 dark:codenote__text-neutral-50">
                 {noteModel.note}
-                {commitId && (
-                    <span className="codenote__ml-2 codenote__inline-flex codenote__items-center codenote__rounded codenote__py-0.5 codenote__px-1 codenote__text-xxs codenote__ring-1 codenote__ring-inset codenote__ring-neutral-950 dark:codenote__ring-neutral-50">
-                        {shortenCommitId(commitId)}
-                    </span>
-                )}
+                <span className="codenote__ml-2 codenote__inline-flex codenote__items-center codenote__rounded codenote__py-0.5 codenote__px-1 codenote__text-xxs codenote__ring-1 codenote__ring-inset codenote__ring-neutral-950 dark:codenote__ring-neutral-50">
+                    {label}
+                </span>
             </div>
         </div>
     );

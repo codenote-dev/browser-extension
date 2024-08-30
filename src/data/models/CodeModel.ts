@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
-import githubApiService from '~data/services/GithubApiService';
+import GithubApiService from '~data/services/GithubApiService';
+import GitLabApiService from '~data/services/GitlabApiService';
 
 export const CodeModel = z
     .object({
@@ -26,17 +27,27 @@ export const CodeModel = z
         ),
     })
     .transform(async (data) => {
-        data.commitId = await githubApiService.getCommitId(
-            data.repository,
-            data.branchName,
-        );
-        data.link = githubApiService.createLink(
-            data.repository,
-            data.commitId,
-            data.file.path,
-            data.code[0].lineNumber,
-            data.code[data.code.length - 1].lineNumber,
-        );
+        if (data.provider === 'github') {
+            data.commitId = await GithubApiService.getCommitId(
+                data.repository,
+                data.branchName,
+            );
+            data.link = GithubApiService.createLink(
+                data.repository,
+                data.commitId || data.branchName,
+                data.file.path,
+                data.code[0].lineNumber,
+                data.code[data.code.length - 1].lineNumber,
+            );
+        } else if (data.provider === 'gitlab') {
+            data.link = GitLabApiService.createLink(
+                data.repository,
+                data.commitId || data.branchName,
+                data.file.path,
+                data.code[0].lineNumber,
+                data.code[data.code.length - 1].lineNumber,
+            );
+        }
 
         return data;
     });
