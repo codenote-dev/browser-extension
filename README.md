@@ -1,9 +1,10 @@
 # Code Note
 
-Chrome extension to add notes to your code without commiting them.
-This is a simple tool to enhance your productivity and help you reading external code.
-The notes are visible ONLY to you, nothing leaves your device.
-All data is stored in local storage.
+Chrome extension designed to enhance your GitHub and GitLab experience by allowing you to add comments to existing code without making any commits. This tool is perfect for code reviews, studying code, or simply jotting down your thoughts and ideas while browsing through repositories.
+
+All comments are stored locally on your machine, ensuring your notes remain private and accessible even when you're offline. The extension integrates seamlessly with GitHub's and GitLab's interfaces, providing a side panel where you can view and manage your comments.
+
+Whether you're a developer, a student, or someone who frequently works with code on GitHub and GitLab, CodeNote offers a new level of interaction with code. Try it today and experience a more productive and personalized way of exploring code on GitHub and GitLab.
 
 ## Requirements
 
@@ -30,3 +31,11 @@ pnpm build
 ```
 
 This should create a production bundle for your extension, ready to be zipped and published to the stores.
+
+## Package extension
+
+Run the following:
+
+```bash
+pnpm package
+```

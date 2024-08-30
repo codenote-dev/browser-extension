@@ -1,9 +1,9 @@
 {
-    "name": "code-notes-browser-extension",
+    "name": "code-note",
     "displayName": "Code Note",
-    "version": "0.0.1",
-    "description": "Browser extension to leave notes in the code for a future resference",
-    "author": "s.yukhnevych@gmail.com",
+    "version": "1.0.0",
+    "description": "Chrome extension designed to enhance your GitHub and GitLab experience by allowing you to add comments to existing code without making any commits.",
+    "author": "admin@codenote.dev",
     "scripts": {
         "dev": "plasmo dev",
         "build": "plasmo build",
