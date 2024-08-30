@@ -3,10 +3,7 @@ import type { PlasmoCSConfig } from 'plasmo';
 import { setCode } from '~data/services/CodeService';
 
 export const config: PlasmoCSConfig = {
-    matches: [
-        'https://github.com/*/*/blob/*',
-        'https://www.github.com/*/*/blob/*',
-    ],
+    matches: ['https://github.com/*', 'https://www.github.com/*'],
 };
 
 const CTA_TEXT = 'Leave a comment';
@@ -100,7 +97,7 @@ function insert() {
     firstMenuItem.parentElement?.insertBefore(commentMenuItem, firstMenuItem);
 }
 
-// Listen for clicks on highlighted code
+// Listen for clicks on highlighted code lines
 document.addEventListener('click', (e) => {
     if (e.target instanceof Element) {
         if (

@@ -6,7 +6,10 @@
         "inlineSourceMap": true,
         "strict": true,
         "paths": {
-            "~*": ["./src/*"]
+            "~*": ["./src/*"],
+            "~components/*": ["./src/ui/shared/components/*"],
+            "~utils": ["./src/lib/utils/index.ts"],
+            "~utils/*": ["./src/lib/utils/*"]
         },
         "baseUrl": "."
     }

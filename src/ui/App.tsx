@@ -1,5 +1,5 @@
 import { StrictMode } from 'react';
-import { createHashRouter, RouterProvider } from 'react-router-dom';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 
 import { pruneNotes } from '~data/services/NotesService';
 import NotFound from '~ui/pages/404';
@@ -8,7 +8,7 @@ import { EditNote } from '~ui/pages/notes/Edit';
 import { Notes } from '~ui/pages/notes/List';
 import { Root } from '~ui/pages/Root';
 
-const router = createHashRouter([
+const router = createMemoryRouter([
     {
         element: <Root />,
         children: [

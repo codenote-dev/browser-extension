@@ -1,47 +1,56 @@
-import { create, insert, insertMultiple, remove, search } from '@orama/orama';
+import Fuse from 'fuse.js';
 
-export class SearchService {
-    schema: Object;
-    db: any;
+export class SearchService<T extends Object> {
+    index: Fuse<T> | null = null;
+    options = {
+        // isCaseSensitive: false,
+        // includeScore: true,
+        // shouldSort: true,
+        // includeMatches: true,
+        // findAllMatches: false,
+        minMatchCharLength: 3,
+        // location: 0,
+        threshold: 0.4,
+        // distance: 100,
+        // useExtendedSearch: false,
+        ignoreLocation: true,
+        // ignoreFieldNorm: false,
+    };
 
-    constructor(schema: Object) {
-        this.schema = schema;
-        this.createDb();
-    }
+    constructor() {}
 
-    async createDb() {
+    createIndex(keys: string[], data: T[]) {
         // Create the database here
-        this.db = await create({
-            schema: this.schema,
-        });
+        this.index = new Fuse<T>(data, { ...this.options, keys });
     }
 
-    async populate(data: Object[]) {
-        await insertMultiple(this.db, data);
+    getIndex() {
+        return this.index;
     }
 
-    async index(data: Object) {
-        await insert(this.db, data);
+    getIndexRaw() {
+        return this.getIndexOrThrow().getIndex();
     }
 
-    async update(id: number, data: Object) {
-        await this.remove(id);
-        await this.index(data);
+    private getIndexOrThrow() {
+        if (!this.index) {
+            throw new Error('Index not created');
+        }
+
+        return this.index;
     }
 
-    async remove(id: number) {
-        await remove(this.db, id);
+    add(data: T) {
+        this.getIndexOrThrow().add(data);
     }
 
-    async search(term: string) {
-        console.log('Searching for:', term);
-        // Search the database here
-        const result = await search(this.db, {
-            term,
-        });
+    remove(cb: (doc: T) => boolean) {
+        this.getIndexOrThrow().remove(cb);
+    }
 
-        console.log(result);
-
-        return result.hits.map((hit: any) => hit.document);
+    search(term: string): T[] {
+        return this.getIndexOrThrow()
+            .search<T>(term)
+            .map((r) => r.item);
     }
 }

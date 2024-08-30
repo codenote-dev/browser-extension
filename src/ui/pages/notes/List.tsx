@@ -1,34 +1,29 @@
-import type { TNoteModel } from '~data/models/NoteModel';
+import { useState } from 'react';
+
 import { useNotesService } from '~data/services/NotesService';
-import RepositoryPanel from '~ui/components/RepositoryPanel';
-import {
-    Accordion,
-    type AccordionProps,
-} from '~ui/shared/components/accordion/Accordion';
+import RepositoriesAccordion from '~ui/components/RepositoriesAccordion';
+import SearchInput from '~ui/components/SearchInput';
+import { Page } from '~ui/shared/Page';
 
 import { Empty } from './Empty';
 
 export const Notes = () => {
-    const { getGrouped, hasAny } = useNotesService();
-    const notes = getGrouped();
-    const repositoryPanels: AccordionProps['children'] = [];
+    const { getAll, hasAny, search } = useNotesService();
+    const [searchTerm, setSearchTerm] = useState<string>('');
+    let notes = getAll();
 
     if (!hasAny()) {
         return <Empty />;
     }
 
-    Object.entries(notes).forEach(([provider, repositories]) =>
-        Object.entries(repositories).forEach(([repository, files]) =>
-            repositoryPanels.push(
-                <RepositoryPanel
-                    key={repository}
-                    provider={provider as TNoteModel['code']['provider']}
-                    repository={repository}
-                    files={files as Record<string, TNoteModel[]>}
-                />,
-            ),
-        ),
-    );
+    if (searchTerm.length > 2) {
+        notes = search(searchTerm);
+    }
 
-    return <Accordion>{repositoryPanels}</Accordion>;
+    return (
+        <Page className="codenote__mx-0">
+            <SearchInput searchTerm={searchTerm} onSearch={setSearchTerm} />
+            <RepositoriesAccordion notes={notes} />
+        </Page>
+    );
 };

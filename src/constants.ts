@@ -2,6 +2,7 @@ export enum StorageKey {
     CODE_TO_COMMENT = 'code_to_comment',
     NOTES = 'notes',
     BROWSER_NAME = 'browser_name',
+    SIDE_PANEL_STATE = 'side_panel_state',
 }
 
 export enum BrowserName {

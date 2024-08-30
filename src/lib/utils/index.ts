@@ -1,4 +1,11 @@
+import { clsx, type ClassValue } from 'clsx';
+import { extendTailwindMerge } from 'tailwind-merge';
+
 import { BrowserName, LANGUAGE_TO_ALIASES } from '~constants';
+
+const twMerge = extendTailwindMerge({
+    prefix: 'codenote__',
+});
 
 export type Language = keyof typeof LANGUAGE_TO_ALIASES;
 export type LanguageAlias = ObjectValues<typeof LANGUAGE_TO_ALIASES>[number];
@@ -57,4 +64,8 @@ export function getBrowserNameClient() {
     }
 
     return browserName;
+}
+
+export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
 }

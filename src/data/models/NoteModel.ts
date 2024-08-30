@@ -1,4 +1,3 @@
-import type { Orama, TypedDocument } from '@orama/orama';
 import { z } from 'zod';
 
 import { CodeModel } from './CodeModel';
@@ -25,10 +24,3 @@ export const NoteModel = z
     });
 
 export type TNoteModel = z.infer<typeof NoteModel>;
-
-export const NoteSearchSchema = {
-    id: 'string',
-    note: 'string',
-} as const;
-
-export type TNoteSearchSchema = TypedDocument<Orama<typeof NoteSearchSchema>>;

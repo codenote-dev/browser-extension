@@ -26,14 +26,15 @@ export function EditableNote({
 
     return (
         <>
-            <div className="mt-5">
+            <div className="codenote__my-3">
                 <CodeBlock
                     startLine={code[0].lineNumber}
                     language={language}
                     code={code.map((x) => x.code).join('\n')}
+                    rounded
                 />
             </div>
-            <div className="mt-5">
+            <div className="codenote__my-3">
                 <Textarea
                     placeholder="Add a note"
                     id="note"
@@ -41,13 +42,13 @@ export function EditableNote({
                     onChange={(e) => setComment(e.target.value)}
                 />
 
-                <div className="mt-2 flex items-center justify-end gap-x-2">
-                    <Button
-                        text="Cancel"
-                        variant="secondary"
-                        action={() => discard(comment)}
-                    />
-                    <Button text="Save" action={() => save(comment)} />
+                <div className="codenote__my-3 codenote__flex codenote__items-center codenote__justify-end codenote__gap-x-3">
+                    <Button variant="ghost" onClick={() => discard(comment)}>
+                        Cancel
+                    </Button>
+                    <Button variant="primary" onClick={() => save(comment)}>
+                        Save
+                    </Button>
                 </div>
             </div>
         </>

@@ -1,10 +1,6 @@
 import { StorageKey } from '~constants';
 import type { TCodeModel } from '~data/models/CodeModel';
-import {
-    NoteModel,
-    NoteSearchSchema,
-    type TNoteModel,
-} from '~data/models/NoteModel';
+import { NoteModel, type TNoteModel } from '~data/models/NoteModel';
 import { storage, useStorage } from '~data/storage';
 
 import { SearchService } from './SearchService';
@@ -14,8 +10,15 @@ type TGroupedNotes = Record<
     TNoteModel['code']['provider'],
     Record<string, Record<string, TNoteModel[]>>
 >;
+type TNoteIndexModel = {
+    id: TNoteModel['id'];
+    note: TNoteModel['note'];
+};
 
-function groupingReducer(acc: TGroupedNotes, noteModel: TNoteModel) {
+const searchService = new SearchService<TNoteIndexModel>();
+const NOTE_INDEX_KEYS = ['note', 'code'];
+
+const groupingReducer = (acc: TGroupedNotes, noteModel: TNoteModel) => {
     const { repository, file, provider } = noteModel.code;
 
     if (!acc[provider]) {
@@ -42,9 +45,25 @@ function groupingReducer(acc: TGroupedNotes, noteModel: TNoteModel) {
     }
 
     return acc;
-}
+};
 
-const searchService = new SearchService(NoteSearchSchema);
+const mapNoteToIndex = (noteModel: TNoteModel): TNoteIndexModel => {
+    const { id, note } = noteModel;
+
+    return {
+        id,
+        note,
+    };
+};
+
+const indexNotes = async () => {
+    const notes = (await storage.get<TNotes>(StorageKey.NOTES)) || {};
+    const notesToIndex = Object.values(notes).map(mapNoteToIndex);
+
+    searchService.createIndex(NOTE_INDEX_KEYS, notesToIndex);
+};
+
+indexNotes();
 
 export const pruneNotes = async (): Promise<void> => {
     await storage.remove(StorageKey.NOTES);
@@ -63,12 +82,16 @@ export function useNotesService() {
                 [noteModel.id]: noteModel,
             });
 
-            searchService.index({
-                id: noteModel.id,
-                note: noteModel.note,
-            });
+            searchService.add(mapNoteToIndex(noteModel));
 
             setNotes(notesCopy);
+        },
+        search(term: string) {
+            const notesList = Object.values(notes || {});
+            const foundIds = searchService.search(term).map((n) => n.id);
+
+            // filter out notes that are not found in the search results
+            return notesList.filter((note) => foundIds.includes(note.id));
         },
         hasAny() {
             return Boolean(Object.keys(notes || {}).length);
@@ -88,10 +111,8 @@ export function useNotesService() {
             noteModel.note = note;
             noteModel.updatedAt = Date.now();
 
-            searchService.update(noteModel.id, {
-                id: noteModel.id,
-                note: noteModel.note,
-            });
+            searchService.remove((note) => note.id === id);
+            searchService.add(mapNoteToIndex(noteModel));
 
             setNotes({
                 ...notes,
@@ -102,27 +123,11 @@ export function useNotesService() {
             const notesCopy = Object.assign({}, notes);
 
             delete notesCopy[id];
-            searchService.remove(id);
+            searchService.remove((note) => note.id === id);
             setNotes(notesCopy);
         },
-        getGrouped(): TGroupedNotes {
-            return Object.values(notes || {}).reduce(
-                groupingReducer,
-                {} as TGroupedNotes,
-            );
-        },
-        async index() {
-            console.log('Indexing notes...', notes);
-            const notesToIndex = Object.values(notes || []).map((note) => ({
-                id: `${note.id}`,
-                note: note.note,
-            }));
-
-            console.log('Notes to index:', notesToIndex);
-
-            if (notesToIndex.length) {
-                await searchService.populate(notesToIndex);
-            }
+        group(notes: TNoteModel[]): TGroupedNotes {
+            return notes.reduce(groupingReducer, {} as TGroupedNotes);
         },
     };
 }

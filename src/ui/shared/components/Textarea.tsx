@@ -1,49 +1,24 @@
-import { useContext, type ChangeEvent } from 'react';
+import * as React from 'react';
 
-import { Theme, ThemeContext } from '~ui/context/ThemeContext';
+import { cn } from '~utils';
 
-export type TextareaProps = {
-    id: string;
-    size?: number;
-    label?: string;
-    placeholder?: string;
-    value?: string;
-    onChange?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-};
+export interface TextareaProps
+    extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
 
-export function Textarea({
-    id,
-    size = 3,
-    label,
-    placeholder,
-    value = '',
-    onChange,
-}: TextareaProps) {
-    const theme = useContext(ThemeContext);
-    const labelClasses = theme === Theme.light ? 'text-gray-900' : 'text-white';
-    const textareaClasses =
-        theme === Theme.light
-            ? 'text-gray-900 ring-gray-300 placeholder:text-gray-400 focus:ring-indigo-600'
-            : 'bg-white/5 text-white ring-white/10 focus:ring-indigo-500';
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+    ({ className, ...props }, ref) => {
+        return (
+            <textarea
+                className={cn(
+                    'codenote__flex codenote__min-h-[60px] codenote__w-full codenote__rounded-md codenote__border codenote__border-neutral-200 codenote__bg-transparent codenote__px-3 codenote__py-2 codenote__text-sm codenote__shadow-sm placeholder:codenote__text-neutral-500 focus-visible:codenote__outline-none focus-visible:codenote__ring-1 focus-visible:codenote__ring-neutral-950 disabled:codenote__cursor-not-allowed disabled:codenote__opacity-50 dark:codenote__border-neutral-800 dark:placeholder:codenote__text-neutral-400 dark:focus-visible:codenote__ring-neutral-300',
+                    className,
+                )}
+                ref={ref}
+                {...props}
+            />
+        );
+    },
+);
+Textarea.displayName = 'Textarea';
 
-    return (
-        <>
-            <label
-                htmlFor={id}
-                className={`block text-sm font-medium leading-6 ${labelClasses}`}>
-                {label}
-            </label>
-            <div className="mt-2">
-                <textarea
-                    rows={size}
-                    name={id}
-                    className={`block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 ${textareaClasses}`}
-                    value={value}
-                    placeholder={placeholder}
-                    onChange={onChange}
-                />
-            </div>
-            {/* <p className="mt-3 text-sm leading-6 text-gray-400">Write a few sentences about yourself.</p> */}
-        </>
-    );
-}
+export { Textarea };

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import type { TNoteModel } from '~data/models/NoteModel';
 import { useNotesService } from '~data/services/NotesService';
+import { useSidePanelService } from '~data/services/SidePanelService';
 import { Button } from '~ui/shared/components/Button';
 
 export type NoteActionsProps = {
@@ -12,29 +13,31 @@ export type NoteActionsProps = {
 export function NoteActions({ noteModel }: NoteActionsProps) {
     const navigate = useNavigate();
     const { remove } = useNotesService();
+    const [sidePanelState, setSidePanelState] = useSidePanelService();
 
     return (
         <>
             <Button
-                icon={Link}
-                size="xs"
                 variant="link"
-                action={() => window.open(noteModel.code.link)}
-            />
+                size="icon"
+                onClick={() => {
+                    window.open(noteModel.code.link);
+                    setSidePanelState(false);
+                }}>
+                <Link />
+            </Button>
             <Button
-                icon={EditPencil}
-                size="xs"
                 variant="link"
-                action={() => {
-                    navigate(`/edit/${noteModel.id}`);
-                }}
-            />
+                size="icon"
+                onClick={() => navigate(`/edit/${noteModel.id}`)}>
+                <EditPencil />
+            </Button>
             <Button
-                icon={Trash}
-                size="xs"
                 variant="link"
-                action={() => remove(noteModel.id)}
-            />
+                size="icon"
+                onClick={() => remove(noteModel.id)}>
+                <Trash />
+            </Button>
         </>
     );
 }
