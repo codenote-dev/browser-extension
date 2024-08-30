@@ -2,7 +2,7 @@
     "name": "code-note",
     "displayName": "Code Note",
     "version": "1.0.0",
-    "description": "Chrome extension designed to enhance your GitHub and GitLab experience by allowing you to add comments to existing code without making any commits.",
+    "description": "Enhance your GitHub & GitLab experience, add comments to existing code without making any commits.",
     "author": "admin@codenote.dev",
     "scripts": {
         "dev": "plasmo dev",
@@ -53,13 +53,5 @@
         "prettier": "3.0.3",
         "prettier-plugin-tailwindcss": "^0.5.14",
         "typescript": "5.2.2"
-    },
-    "manifest": {
-        "host_permissions": [
-            "https://*/*"
-        ],
-        "permissions": [
-            "tabs"
-        ]
     }
 }
