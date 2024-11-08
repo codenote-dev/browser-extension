@@ -1,4 +1,4 @@
-import { Notes } from 'iconoir-react';
+import { MessageSquareCode } from 'lucide-react';
 import React from 'react';
 
 import { Page } from '~ui/shared/Page';
@@ -7,7 +7,7 @@ export function Empty() {
     return (
         <Page>
             <div className="codenote__my-12 codenote__flex codenote__h-full codenote__flex-col codenote__items-center codenote__justify-center">
-                <Notes color="#fff" width={48} height={48} strokeWidth={0.5} />
+                <MessageSquareCode color="#fff" size={48} absoluteStrokeWidth />
                 <h3 className="codenote__mt-2 codenote__text-sm codenote__font-semibold codenote__text-white">
                     No notes yet :(
                 </h3>

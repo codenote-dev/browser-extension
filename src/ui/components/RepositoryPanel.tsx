@@ -1,4 +1,4 @@
-import { Github, GitlabFull } from 'iconoir-react';
+import { Github, Gitlab } from 'lucide-react';
 import React from 'react';
 
 import type { TNoteModel } from '~data/models/NoteModel';
@@ -29,9 +29,9 @@ const RepositoryPanel = ({
     const notesCountString = notesCount > 99 ? '99+' : notesCount.toString();
     const icon =
         provider === 'gitlab' ? (
-            <GitlabFull color="#fff" width={18} height={18} />
+            <Gitlab color="#fff" size={18} />
         ) : (
-            <Github color="#fff" width={18} height={18} />
+            <Github color="#fff" size={18} />
         );
     const content = Object.entries(files).map(([fileName, notes]) => (
         <FilePanel key={fileName} fileName={fileName} notes={notes} />
@@ -41,7 +41,7 @@ const RepositoryPanel = ({
         <AccordionItem value={repository} className="codenote__border-b">
             <AccordionTrigger className="codenote__flex codenote__w-full codenote__cursor-pointer codenote__items-start codenote__justify-between codenote__p-3">
                 <span
-                    className="codenote__text-base codenote__font-bold codenote__inline-flex codenote__items-center"
+                    className="codenote__inline-flex codenote__items-center codenote__text-base codenote__font-bold"
                     title={repository}>
                     {icon && <span className="codenote__mr-2">{icon}</span>}
                     <span

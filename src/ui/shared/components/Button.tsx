@@ -26,7 +26,7 @@ const buttonVariants = cva(
                 default: 'codenote__h-9 codenote__px-4 codenote__py-2',
                 sm: 'codenote__h-8 codenote__rounded-md codenote__px-3 codenote__text-xs',
                 lg: 'codenote__h-10 codenote__rounded-md codenote__px-8',
-                icon: 'codenote__h-9 codenote__w-9',
+                icon: 'codenote__h-8 codenote__w-8',
             },
         },
         defaultVariants: {

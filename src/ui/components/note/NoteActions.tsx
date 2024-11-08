@@ -1,4 +1,4 @@
-import { EditPencil, Link, Trash } from 'iconoir-react';
+import { Eye, Pencil, Trash2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 import type { TNoteModel } from '~data/models/NoteModel';
@@ -13,30 +13,33 @@ export type NoteActionsProps = {
 export function NoteActions({ noteModel }: NoteActionsProps) {
     const navigate = useNavigate();
     const { remove } = useNotesService();
-    const [sidePanelState, setSidePanelState] = useSidePanelService();
+    const [_sidePanelState, setSidePanelState] = useSidePanelService();
 
     return (
         <>
             <Button
                 variant="link"
                 size="icon"
+                className="hover:codenote__bg-white/10"
                 onClick={() => {
                     window.open(noteModel.code.link);
                     setSidePanelState(false);
                 }}>
-                <Link />
+                <Eye size={14} />
             </Button>
             <Button
                 variant="link"
                 size="icon"
+                className="hover:codenote__bg-white/10"
                 onClick={() => navigate(`/edit/${noteModel.id}`)}>
-                <EditPencil />
+                <Pencil size={14} />
             </Button>
             <Button
                 variant="link"
                 size="icon"
+                className="hover:codenote__bg-white/10"
                 onClick={() => remove(noteModel.id)}>
-                <Trash />
+                <Trash2 size={14} />
             </Button>
         </>
     );
