@@ -25,7 +25,7 @@ export function Page({
     children,
 }: PageProps) {
     return (
-        <div className={cn('codenote__mx-3', className)}>
+        <div className={cn('codenote__mx-3 codenote__mb-28', className)}>
             {title && (
                 <SheetHeader className={cn('codenote__my-3', classNameHeader)}>
                     <SheetTitle>{title}</SheetTitle>
