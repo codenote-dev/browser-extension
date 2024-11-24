@@ -1,9 +1,20 @@
 import styleText from 'data-text:../style.css';
+import type { PlasmoCSConfig } from 'plasmo';
 import React, { useEffect, useRef } from 'react';
 
 import { useSidePanelService } from '~data/services/SidePanelService';
 import { App } from '~ui/App';
 import { Sheet, SheetPortal } from '~ui/shared/components/Sheet';
+
+export const config: PlasmoCSConfig = {
+    matches: [
+        'https://github.com/*',
+        'https://www.github.com/*',
+        'https://gitlab.com/*',
+        'https://www.gitlab.com/*',
+        'https://*.gitlab.com/*',
+    ],
+};
 
 export const getStyle = () => {
     const style = document.createElement('style');

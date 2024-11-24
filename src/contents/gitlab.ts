@@ -5,7 +5,11 @@ import { setCode } from '~data/services/CodeService';
 import GitlabApiService from '~data/services/GitlabApiService';
 
 export const config: PlasmoCSConfig = {
-    matches: ['https://gitlab.com/*', 'https://www.gitlab.com/*'],
+    matches: [
+        'https://gitlab.com/*',
+        'https://www.gitlab.com/*',
+        'https://*.gitlab.com/*',
+    ],
 };
 
 const containerSelector = '.diff-line-num';
