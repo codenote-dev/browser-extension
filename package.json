@@ -1,7 +1,8 @@
 {
     "name": "code-note",
     "displayName": "Code Note",
-    "version": "1.0.1-alpha",
+    "version": "1.0.1",
+    "versionName": "1.0.1 Alpha",
     "description": "Enhance your GitHub & GitLab experience, add comments to existing code without making any commits.",
     "author": "admin@codenote.dev",
     "scripts": {
