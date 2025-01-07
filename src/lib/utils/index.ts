@@ -69,3 +69,42 @@ export function getBrowserNameClient() {
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
+
+export function sendCustomDocumentEvent(event: string) {
+    const customEvent = new CustomEvent(event, {
+        detail: {},
+        bubbles: true,
+        cancelable: true,
+    });
+
+    document.dispatchEvent(customEvent);
+}
+
+export function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export async function emulateClick(selector: string) {
+    const el = document.querySelector(selector);
+
+    if (!el) {
+        console.error(`Element not found for selector: ${selector}`);
+        return;
+    }
+
+    const mouseDownEvent = new MouseEvent('mousedown', {
+        view: window,
+        bubbles: true,
+        cancelable: true,
+    });
+    const clickEvent = new MouseEvent('click', {
+        view: window,
+        bubbles: true,
+        cancelable: false,
+    });
+
+    el.dispatchEvent(mouseDownEvent);
+    // Wait for the element to appear
+    await sleep(25);
+    el.dispatchEvent(clickEvent);
+}

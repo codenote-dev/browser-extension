@@ -1,4 +1,4 @@
-import styleText from 'data-text:../style.css';
+import styleText from 'data-text:../styles/style.css';
 import type { PlasmoCSConfig } from 'plasmo';
 import React, { useEffect, useRef } from 'react';
 

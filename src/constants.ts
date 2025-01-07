@@ -3,7 +3,11 @@ export enum StorageKey {
     NOTES = 'notes',
     BROWSER_NAME = 'browser_name',
     SIDE_PANEL_STATE = 'side_panel_state',
+    IS_ONBOARDING = 'is_onboarding',
 }
+
+export const GITHUB_ONBOARDING_URL =
+    'https://github.com/codenote-dev/browser-extension/blob/main/package.json';
 
 export enum BrowserName {
     Arc = 'Arc',
@@ -14,6 +18,11 @@ export enum BrowserName {
     Opera = 'Opera',
     Safari = 'Safari',
     Unknown = 'Unknown',
+}
+
+export enum OnboardingEvent {
+    GithubOpenLineMenu = 'github_open_line_menu',
+    GithubOpenSidebar = 'github_open_sidebar',
 }
 
 export const LANGUAGE_TO_ALIASES = {

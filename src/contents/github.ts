@@ -1,12 +1,13 @@
 import type { PlasmoCSConfig } from 'plasmo';
 
+import { OnboardingEvent } from '~constants';
 import { setCode } from '~data/services/CodeService';
 
 export const config: PlasmoCSConfig = {
     matches: ['https://github.com/*', 'https://www.github.com/*'],
 };
 
-const CTA_TEXT = 'Leave a comment';
+const CTA_TEXT = 'Leave a note';
 
 const highlightedMenuButtonContainerSelector =
     '#highlighted-line-menu-container';
@@ -85,6 +86,14 @@ function insert() {
 
     commentMenuItem.textContent = CTA_TEXT;
 
+    // [ONBOARDING] Send data to side panel when comment button is clicked, used only during onboarding
+    document.addEventListener(OnboardingEvent.GithubOpenSidebar, () =>
+        sendToSidePanel({
+            ...getMetadata(),
+            code: getCode(),
+        }),
+    );
+
     commentMenuItem.addEventListener('click', () => {
         sendToSidePanel({
             ...getMetadata(),
@@ -109,3 +118,6 @@ document.addEventListener('click', (e) => {
         }
     }
 });
+
+// [ONBOARDING] Listen for custom event to insert comment button, used only during onboarding
+document.addEventListener(OnboardingEvent.GithubOpenLineMenu, (e) => insert());
