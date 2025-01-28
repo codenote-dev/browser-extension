@@ -24,6 +24,9 @@ jobs:
           node-version: 22.x
           cache: 'pnpm'
       - name: Build the extension
+        env:
+          PLASMO_PUBLIC_GA_MEASUREMENT_ID: ${{ secrets.PLASMO_PUBLIC_GA_MEASUREMENT_ID }}
+          PLASMO_PUBLIC_GA_API_SECRET: ${{ secrets.PLASMO_PUBLIC_GA_API_SECRET }}
         run: pnpm build
       - name: Package the extension into a zip artifact
         run: pnpm package
