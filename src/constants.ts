@@ -4,6 +4,8 @@ export enum StorageKey {
     BROWSER_NAME = 'browser_name',
     SIDE_PANEL_STATE = 'side_panel_state',
     IS_ONBOARDING = 'is_onboarding',
+    USER_ID = 'user_id',
+    SESSION = 'session',
 }
 
 export const GITHUB_ONBOARDING_URL =

@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
+import { sendAnalyticsEvent } from '~data/services/AnalyticsService';
 import { useCodeService } from '~data/services/CodeService';
 import { useNotesService } from '~data/services/NotesService';
 import type { LanguageAlias } from '~lib/utils';
@@ -24,10 +25,16 @@ export function CreateNote() {
                 language={code.file.ext as LanguageAlias}
                 save={(note) => {
                     create(code, note);
+                    sendAnalyticsEvent('note_create_success', {
+                        provider: code.provider,
+                    });
                     setCode();
                     navigate('/');
                 }}
                 discard={() => {
+                    sendAnalyticsEvent('note_create_abort', {
+                        provider: code.provider,
+                    });
                     setCode();
                     navigate('/');
                 }}

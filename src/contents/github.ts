@@ -1,6 +1,7 @@
 import type { PlasmoCSConfig } from 'plasmo';
 
 import { OnboardingEvent } from '~constants';
+import { sendAnalyticsEvent } from '~data/services/AnalyticsService';
 import { setCode } from '~data/services/CodeService';
 
 export const config: PlasmoCSConfig = {
@@ -98,6 +99,10 @@ function insert() {
         sendToSidePanel({
             ...getMetadata(),
             code: getCode(),
+        });
+
+        sendAnalyticsEvent('note_create', {
+            provider: 'github',
         });
 
         // Close context menu

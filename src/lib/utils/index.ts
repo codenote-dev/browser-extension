@@ -108,3 +108,7 @@ export async function emulateClick(selector: string) {
     await sleep(25);
     el.dispatchEvent(clickEvent);
 }
+
+export function isSnakeCase(str: string) {
+    return /^[a-z0-9_]+$/.test(str);
+}

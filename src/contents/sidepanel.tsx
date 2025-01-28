@@ -2,6 +2,7 @@ import styleText from 'data-text:../styles/style.css';
 import type { PlasmoCSConfig } from 'plasmo';
 import React, { useEffect, useRef } from 'react';
 
+import { sendAnalyticsEvent } from '~data/services/AnalyticsService';
 import { useSidePanelService } from '~data/services/SidePanelService';
 import { App } from '~ui/App';
 import { Sheet, SheetPortal } from '~ui/shared/components/Sheet';
@@ -28,6 +29,9 @@ export default () => {
 
     useEffect(() => {
         document.body.style.overflow = sidePanelState ? 'hidden' : 'auto';
+        sendAnalyticsEvent(
+            sidePanelState ? 'side_panel_open' : 'side_panel_close',
+        );
     }, [sidePanelState]);
 
     return (

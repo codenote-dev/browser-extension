@@ -1,4 +1,5 @@
 import { GITHUB_ONBOARDING_URL } from '~constants';
+import { handleAnalyticsEvent } from '~data/services/AnalyticsService';
 import { startOnboarding } from '~data/services/OnboardingService';
 import {
     openSidePanel,
@@ -19,5 +20,8 @@ chrome.runtime.onMessage.addListener((message) => {
         openSidePanel();
     }
 });
+
+// Analytics events
+chrome.runtime.onMessage.addListener(handleAnalyticsEvent);
 
 chrome.action.onClicked.addListener(() => toggleSidePanel());

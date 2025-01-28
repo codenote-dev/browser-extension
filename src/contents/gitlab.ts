@@ -1,6 +1,7 @@
 import icon from 'data-base64:~../assets/icon.png';
 import type { PlasmoCSConfig } from 'plasmo';
 
+import { sendAnalyticsEvent } from '~data/services/AnalyticsService';
 import { setCode } from '~data/services/CodeService';
 import GitlabApiService from '~data/services/GitlabApiService';
 
@@ -33,6 +34,11 @@ function createTrigger() {
             ...getMetadata(),
             code: getCode(),
         });
+
+        sendAnalyticsEvent('note_create', {
+            provider: 'gitlab',
+        });
+
         this.remove();
     });
 
